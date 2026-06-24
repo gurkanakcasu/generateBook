@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="tr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Boyama Kitabı</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="page">
+      <header class="top">
+        <div>
+          <h1>Boyama Kitabı</h1>
+          <p class="lead">Tek prompt yazın, görsel oluşturun, önizleyin ve indirin.</p>
+        </div>
+      </header>
+
+      <section class="card">
+        <label class="field">
+          <span>Kitap başlığı (indirme dosya adı için)</span>
+          <input type="text" id="bookTitle" placeholder="Örn: Orman Hayvanları" />
+        </label>
+        <label class="field">
+          <span>Sayfa başlığı (isteğe bağlı)</span>
+          <input type="text" id="pageTitle" placeholder="Örn: Tilki ve mantar" />
+        </label>
+        <label class="field">
+          <span>OpenAI API anahtarı (isteğe bağlı)</span>
+          <input
+            type="password"
+            id="apiKey"
+            placeholder="sk-... (boş = ücretsiz servis)"
+            autocomplete="off"
+          />
+        </label>
+        <label class="field">
+          <span>Stil öneki</span>
+          <textarea id="stylePrefix" rows="2">Black and white coloring book line art, clean outlines, white background, no shading, kid-friendly:</textarea>
+        </label>
+        <label class="field">
+          <span>Prompt</span>
+          <textarea
+            id="promptInput"
+            rows="4"
+            placeholder="Örn: A cute fox sitting under a mushroom in the forest"
+          ></textarea>
+        </label>
+
+        <div class="preview-box">
+          <span class="preview-label">Tam prompt:</span>
+          <pre id="previewText" class="preview-text">(Prompt yazın...)</pre>
+        </div>
+
+        <div class="actions">
+          <button type="button" id="generateBtn" class="primary">Görsel Oluştur</button>
+          <button type="button" id="clearBtn" class="ghost">Temizle</button>
+        </div>
+      </section>
+
+      <section id="imagePanel" class="card image-panel" hidden>
+        <div id="imageStatus" class="image-status">Görsel oluşturuluyor, lütfen bekleyin...</div>
+        <img id="previewImage" class="preview-image" alt="Önizleme" hidden />
+        <div id="imageActions" class="image-actions" hidden>
+          <button type="button" id="downloadBtn" class="secondary">İndir</button>
+          <button type="button" id="regenerateBtn" class="ghost">Yeniden Oluştur</button>
+        </div>
+      </section>
+
+      <footer class="bottom">
+        <p>Aynı anda yalnızca bir görsel oluşturulur. 429 hatası alırsanız birkaç saniye bekleyip tekrar deneyin.</p>
+      </footer>
+    </div>
+
+    <div id="toast" class="toast" hidden></div>
+    <script src="app.js"></script>
+  </body>
+</html>
