@@ -1,0 +1,8 @@
+node_modules
+.git
+.browser-profile
+.browser-profile-leonardo
+.browser-profile-test
+npm-debug.log
+.env
+.env.*

@@ -2,6 +2,17 @@
 
 Boyama kitabı sayfaları için prompt yazıp görsel oluşturan, önizleyen ve indirmenize izin veren yerel web uygulaması.
 
+## Render.com deploy
+
+1. [Render Dashboard](https://dashboard.render.com) → **New** → **Blueprint** (veya **Web Service**)
+2. GitHub repo: `gurkanakcasu/generateBook`
+3. **Runtime:** Docker
+4. **Dockerfile Path:** `./Dockerfile` (repo kökünde)
+5. **Environment Variables** (isteğe bağlı):
+   - `OPENAI_API_KEY` = `sk-...` (DALL-E 3 için)
+
+`render.yaml` dosyası ile Blueprint deploy otomatik yapılandırılır.
+
 ## Kurulum
 
 ```bash
