@@ -1,9 +1,5 @@
-const STORAGE_KEY = "coloringBook_v3";
-const API_KEY_STORAGE = "coloringBookApiKey";
+const STORAGE_KEY = "coloringBook_v4";
 
-const bookTitle = document.getElementById("bookTitle");
-const pageTitle = document.getElementById("pageTitle");
-const apiKeyInput = document.getElementById("apiKey");
 const stylePrefix = document.getElementById("stylePrefix");
 const promptInput = document.getElementById("promptInput");
 const previewText = document.getElementById("previewText");
@@ -51,8 +47,6 @@ function saveToStorage() {
   localStorage.setItem(
     STORAGE_KEY,
     JSON.stringify({
-      bookTitle: bookTitle.value,
-      pageTitle: pageTitle.value,
       stylePrefix: stylePrefix.value,
       prompt: promptInput.value,
     })
@@ -60,16 +54,11 @@ function saveToStorage() {
 }
 
 function loadFromStorage() {
-  const raw = localStorage.getItem(STORAGE_KEY);
-  if (!raw) {
-    migrateOldStorage();
-    return;
-  }
+  const raw = localStorage.getItem(STORAGE_KEY) || localStorage.getItem("coloringBook_v3");
+  if (!raw) return;
 
   try {
     const data = JSON.parse(raw);
-    bookTitle.value = data.bookTitle || "";
-    pageTitle.value = data.pageTitle || "";
     stylePrefix.value =
       data.stylePrefix ||
       "Black and white coloring book line art, clean outlines, white background, no shading, kid-friendly:";
@@ -77,33 +66,6 @@ function loadFromStorage() {
   } catch {
     // ignore
   }
-}
-
-function migrateOldStorage() {
-  const raw = localStorage.getItem("coloringBookPrompts_v2");
-  if (!raw) return;
-
-  try {
-    const data = JSON.parse(raw);
-    bookTitle.value = data.bookTitle || "";
-    stylePrefix.value = data.stylePrefix || stylePrefix.value;
-    const first = data.prompts?.[0];
-    if (first) {
-      pageTitle.value = first.title || "";
-      promptInput.value = first.text || "";
-    }
-  } catch {
-    // ignore
-  }
-}
-
-function slugify(text) {
-  return (text || "sayfa")
-    .toLowerCase()
-    .replace(/[^\w\s-]/g, "")
-    .trim()
-    .replace(/\s+/g, "-")
-    .slice(0, 40);
 }
 
 function setLoading(loading) {
@@ -137,10 +99,8 @@ function clearImage() {
 }
 
 function getDownloadFilename() {
-  const book = slugify(bookTitle.value) || "boyama-kitabi";
-  const page = slugify(pageTitle.value) || "sayfa";
   const ext = currentImage?.mimeType === "image/png" ? "png" : "jpg";
-  return `${book}-${page}.${ext}`;
+  return `boyama-kitabi-${Date.now()}.${ext}`;
 }
 
 function downloadImage() {
@@ -174,10 +134,7 @@ async function generateImage() {
     const res = await fetch("/api/generate", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        prompt: fullPrompt,
-        apiKey: apiKeyInput.value.trim(),
-      }),
+      body: JSON.stringify({ prompt: fullPrompt }),
     });
 
     const data = await res.json();
@@ -212,22 +169,17 @@ async function generateImage() {
 function clearForm() {
   if (!confirm("Prompt ve önizleme temizlensin mi?")) return;
   promptInput.value = "";
-  pageTitle.value = "";
   clearImage();
   updatePreview();
   scheduleSave();
   showToast("Temizlendi");
 }
 
-[bookTitle, pageTitle, stylePrefix, promptInput].forEach((el) => {
+[stylePrefix, promptInput].forEach((el) => {
   el.addEventListener("input", () => {
     updatePreview();
     scheduleSave();
   });
-});
-
-apiKeyInput.addEventListener("input", () => {
-  localStorage.setItem(API_KEY_STORAGE, apiKeyInput.value);
 });
 
 generateBtn.addEventListener("click", generateImage);
@@ -235,6 +187,5 @@ regenerateBtn.addEventListener("click", generateImage);
 downloadBtn.addEventListener("click", downloadImage);
 clearBtn.addEventListener("click", clearForm);
 
-apiKeyInput.value = localStorage.getItem(API_KEY_STORAGE) || "";
 loadFromStorage();
 updatePreview();

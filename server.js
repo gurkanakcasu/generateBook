@@ -25,7 +25,7 @@ app.post("/api/generate", async (req, res) => {
 
   try {
     const prompt = String(req.body?.prompt || "").trim();
-    const apiKey = String(req.body?.apiKey || process.env.OPENAI_API_KEY || "").trim();
+    const apiKey = String(process.env.OPENAI_API_KEY || "").trim();
 
     if (!prompt) {
       return res.status(400).json({ error: "Prompt boş olamaz." });
