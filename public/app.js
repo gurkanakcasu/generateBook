@@ -68,11 +68,17 @@ function loadFromStorage() {
   }
 }
 
+function setGenerateButtonLoading(loading) {
+  generateBtn.disabled = loading;
+  generateBtn.innerHTML = loading
+    ? '<span class="btn-icon">⏳</span> Oluşturuluyor...'
+    : '<span class="btn-icon">✨</span> Görsel Oluştur';
+}
+
 function setLoading(loading) {
   isGenerating = loading;
-  generateBtn.disabled = loading;
   regenerateBtn.disabled = loading;
-  generateBtn.textContent = loading ? "Oluşturuluyor..." : "Görsel Oluştur";
+  setGenerateButtonLoading(loading);
 
   imagePanel.hidden = false;
   imageStatus.hidden = !loading;

@@ -3,54 +3,87 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Boyama Kitabı</title>
+    <title>Boyama Kitabı ✨</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Nunito:wght@400;600;700&display=swap"
+      rel="stylesheet"
+    />
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
+    <div class="bg-blob blob-1"></div>
+    <div class="bg-blob blob-2"></div>
+    <div class="bg-blob blob-3"></div>
+
     <div class="page">
-      <header class="top">
-        <div>
-          <h1>Boyama Kitabı</h1>
-          <p class="lead">Tek prompt yazın, görsel oluşturun, önizleyin ve indirin.</p>
-        </div>
+      <header class="hero">
+        <div class="hero-badge">🖍️ Hayal Et · Çiz · Boya</div>
+        <h1>Boyama Kitabı Stüdyosu</h1>
+        <p class="lead">Bir cümle yaz, sihirli çizgiler oluşsun!</p>
       </header>
 
-      <section class="card">
+      <section class="card card-prompt">
+        <div class="card-head">
+          <span class="step">1</span>
+          <h2>Ne çizelim?</h2>
+        </div>
+
         <label class="field">
-          <span>Stil öneki</span>
+          <span class="label-icon">🎨</span>
+          <span class="label-text">Stil öneki</span>
           <textarea id="stylePrefix" rows="2">Black and white coloring book line art, clean outlines, white background, no shading, kid-friendly:</textarea>
         </label>
-        <label class="field">
-          <span>Prompt</span>
+
+        <label class="field field-main">
+          <span class="label-icon">✏️</span>
+          <span class="label-text">Senin promptun</span>
           <textarea
             id="promptInput"
             rows="4"
-            placeholder="Örn: A cute fox sitting under a mushroom in the forest"
+            placeholder="Örn: Ormanda mantarın altında oturan sevimli bir tilki"
           ></textarea>
         </label>
 
         <div class="preview-box">
-          <span class="preview-label">Tam prompt:</span>
+          <span class="preview-label">🔮 Sihirli formül (tam prompt)</span>
           <pre id="previewText" class="preview-text">(Prompt yazın...)</pre>
         </div>
 
         <div class="actions">
-          <button type="button" id="generateBtn" class="primary">Görsel Oluştur</button>
-          <button type="button" id="clearBtn" class="ghost">Temizle</button>
+          <button type="button" id="generateBtn" class="btn primary">
+            <span class="btn-icon">✨</span> Görsel Oluştur
+          </button>
+          <button type="button" id="clearBtn" class="btn ghost">🧹 Temizle</button>
         </div>
       </section>
 
-      <section id="imagePanel" class="card image-panel" hidden>
-        <div id="imageStatus" class="image-status">Görsel oluşturuluyor, lütfen bekleyin...</div>
-        <img id="previewImage" class="preview-image" alt="Önizleme" hidden />
+      <section id="imagePanel" class="card card-result image-panel" hidden>
+        <div class="card-head">
+          <span class="step step-2">2</span>
+          <h2>Sayfan hazır!</h2>
+        </div>
+
+        <div id="imageStatus" class="image-status">
+          <div class="loader" aria-hidden="true"></div>
+          <p>Çizgiler çiziliyor… biraz sabır 🎨</p>
+        </div>
+
+        <div class="frame-wrap">
+          <img id="previewImage" class="preview-image" alt="Önizleme" hidden />
+        </div>
+
         <div id="imageActions" class="image-actions" hidden>
-          <button type="button" id="downloadBtn" class="secondary">İndir</button>
-          <button type="button" id="regenerateBtn" class="ghost">Yeniden Oluştur</button>
+          <button type="button" id="downloadBtn" class="btn secondary">
+            <span class="btn-icon">⬇️</span> İndir
+          </button>
+          <button type="button" id="regenerateBtn" class="btn ghost">🔄 Yeniden Oluştur</button>
         </div>
       </section>
 
       <footer class="bottom">
-        <p>Aynı anda yalnızca bir görsel oluşturulur. 429 hatası alırsanız birkaç saniye bekleyip tekrar deneyin.</p>
+        <p>💡 Aynı anda tek görsel üretilir. Çok hızlı tıklarsan 429 hatası alabilirsin — birkaç saniye bekle!</p>
       </footer>
     </div>
 
